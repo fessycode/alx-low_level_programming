@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/** 
+ * main - prints all ths single digit numbers of base 10 with putchar
+ *
+ * Return: Always 0 (Success)
+ */
 
 
 
