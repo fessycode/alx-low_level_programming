@@ -11,19 +11,14 @@
 
 int _islower(int c)
 {
-	char alph;
-
-	for (alph = 'a'; alph <= 'z'; alph++)
+	if (c >= 97 && c <= 122)
 	{
-		if (c == alph)
-		{
-			_putchar(c + '0');
-			return (0);
-		}
-		else
-		{
-			return (1);
-		}
+		return (1);
 	}
-	return (0);
+	else
+	{
+		return (0);
+	}
+	_putchar('\n');
+
 }
