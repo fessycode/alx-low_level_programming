@@ -8,11 +8,11 @@
 void times_table(void)
 {
 	int x, y, res;
-	
+
 	for (x = 0; x <= 9; x++)
 	{
 		_putchar(48);
-		for (y = 1; y <=9; y++)
+		for (y = 1; y <= 9; y++)
 		{
 			res = x * y;
 			_putchar(44);
@@ -27,7 +27,6 @@ void times_table(void)
 				_putchar((res / 10) + 48);
 				_putchar((res % 10) + 48);
 			}
-		}
-		_putchar('\n');
+		}	
 	}
 }
