@@ -13,14 +13,14 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	ssize_t nrd, nwr;
 	char *buffer;
 
-	if (!filename)
+	if (filename == NULL)
 		return (0);
 	n = open(filename, O_RDONLY);
 
 	if (n == -1)
 		return (0);
 	buffer = malloc(sizeof(char) * (letters));
-	if (!buffer)
+	if (buffer == NULL)
 		return (0);
 	nrd = read(n, buffer, letters);
 	nwr = write(STDOUT_FILENO, buffer, nrd);
