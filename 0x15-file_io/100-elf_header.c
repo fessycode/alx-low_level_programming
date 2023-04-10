@@ -7,44 +7,44 @@
 #include <elf.h>
 
 /**
- * print_addrr - prints address
- * @pt: magic.
+ * print_addr - prints address
+ * @ptr: magic.
  * Return: no return.
  */
-void print_addrr(char *pt)
+void print_addr(char *ptr)
 {
-	int n;
+	int i;
 	int begin;
 	char sys;
 
 	printf("  Entry point address:               0x");
 
-	sys = pt[4] + '0';
+	sys = ptr[4] + '0';
 	if (sys == '1')
 	{
 		begin = 26;
 		printf("80");
-		for (n = begin; n >= 22; n--)
+		for (i = begin; i >= 22; i--)
 		{
-			if (pt[n] > 0)
-				printf("%x", pt[n]);
-			else if (pt[n] < 0)
-				printf("%x", 256 + pt[n]);
+			if (ptr[i] > 0)
+				printf("%x", ptr[i]);
+			else if (ptr[i] < 0)
+				printf("%x", 256 + ptr[i]);
 		}
-		if (pt[7] == 6)
+		if (ptr[7] == 6)
 			printf("00");
 	}
 
 	if (sys == '2')
 	{
 		begin = 26;
-		for (n = begin; n > 23; n--)
+		for (i = begin; i > 23; i--)
 		{
-			if (pt[n] >= 0)
-				printf("%02x", pt[n]);
+			if (ptr[i] >= 0)
+				printf("%02x", ptr[i]);
 
-			else if (pt[n] < 0)
-				printf("%02x", 256 + pt[n]);
+			else if (ptr[i] < 0)
+				printf("%02x", 256 + ptr[i]);
 
 		}
 	}
@@ -53,17 +53,17 @@ void print_addrr(char *pt)
 
 /**
  * print_type - prints type
- * @pt: magic.
+ * @ptr: magic.
  * Return: no return.
  */
-void print_type(char *pt)
+void print_type(char *ptr)
 {
-	char type = pt[16];
+	char type = ptr[16];
 
-	if (pt[5] == 1)
-		type = pt[16];
+	if (ptr[5] == 1)
+		type = ptr[16];
 	else
-		type = pt[17];
+		type = ptr[17];
 
 	printf("  Type:                              ");
 	if (type == 0)
@@ -82,12 +82,12 @@ void print_type(char *pt)
 
 /**
  * print_osabi - prints osabi
- * @pt: magic.
+ * @ptr: magic.
  * Return: no return.
  */
-void print_osabi(char *pt)
+void print_osabi(char *ptr)
 {
-	char osabi = pt[7];
+	char osabi = ptr[7];
 
 	printf("  OS/ABI:                            ");
 	if (osabi == 0)
@@ -99,18 +99,18 @@ void print_osabi(char *pt)
 	else
 		printf("<unknown: %x>\n", osabi);
 
-	printf("  ABI Version:                   %d\n", pt[8]);
+	printf("  ABI Version:                       %d\n", ptr[8]);
 }
 
 
 /**
  * print_version - prints version
- * @pt: magic.
+ * @ptr: magic.
  * Return: no return.
  */
-void print_version(char *pt)
+void print_version(char *ptr)
 {
-	int version = pt[6];
+	int version = ptr[6];
 
 	printf("  Version:                           %d", version);
 
@@ -121,12 +121,12 @@ void print_version(char *pt)
 }
 /**
  * print_data - prints data
- * @pt: magic.
+ * @ptr: magic.
  * Return: no return.
  */
-void print_data(char *pt)
+void print_data(char *ptr)
 {
-	char data = pt[5];
+	char data = ptr[5];
 
 	printf("  Data:                              2's complement");
 	if (data == 1)
@@ -137,17 +137,17 @@ void print_data(char *pt)
 }
 /**
  * print_magic - prints magic info.
- * @pt: magic.
+ * @ptr: magic.
  * Return: no return.
  */
-void print_magic(char *pt)
+void print_magic(char *ptr)
 {
 	int bytes;
 
 	printf("  Magic:  ");
 
 	for (bytes = 0; bytes < 16; bytes++)
-		printf(" %02x", pt[bytes]);
+		printf(" %02x", ptr[bytes]);
 
 	printf("\n");
 
@@ -155,18 +155,18 @@ void print_magic(char *pt)
 
 /**
  * check_sys - check the version system.
- * @pt: magic.
+ * @ptr: magic.
  * Return: no return.
  */
-void check_sys(char *pt)
+void check_sys(char *ptr)
 {
-	char sys = pt[4] + '0';
+	char sys = ptr[4] + '0';
 
 	if (sys == '0')
 		exit(98);
 
 	printf("ELF Header:\n");
-	print_magic(pt);
+	print_magic(ptr);
 
 	if (sys == '1')
 		printf("  Class:                             ELF32\n");
@@ -174,41 +174,41 @@ void check_sys(char *pt)
 	if (sys == '2')
 		printf("  Class:                             ELF64\n");
 
-	print_data(pt);
-	print_version(pt);
-	print_osabi(pt);
-	print_type(pt);
-	print_addrr(pt);
+	print_data(ptr);
+	print_version(ptr);
+	print_osabi(ptr);
+	print_type(ptr);
+	print_addr(ptr);
 }
 
 /**
  * check_elf - check if it is an elf file.
- * @pt: magic.
+ * @ptr: magic.
  * Return: 1 if it is an elf file. 0 if not.
  */
-int check_elf(char *pt)
+int check_elf(char *ptr)
 {
-	int addrr = (int)pt[0];
-	char E = pt[1];
-	char L = pt[2];
-	char F = pt[3];
+	int addr = (int)ptr[0];
+	char E = ptr[1];
+	char L = ptr[2];
+	char F = ptr[3];
 
-	if (addrr == 127 && E == 'E' && L == 'L' && F == 'F')
+	if (addr == 127 && E == 'E' && L == 'L' && F == 'F')
 		return (1);
 
 	return (0);
 }
 
 /**
- * main - check the cod.
+ * main - check the code
  * @argc: number of arguments.
  * @argv: arguments vector.
  * Return: Always 0.
  */
 int main(int argc, char *argv[])
 {
-	int i, ret_read;
-	char pt[27];
+	int fd, ret_read;
+	char ptr[27];
 
 	if (argc != 2)
 	{
@@ -216,16 +216,16 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	i = open(argv[1], O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 
-	if (i < 0)
+	if (fd < 0)
 	{
 		dprintf(STDERR_FILENO, "Err: file can not be open\n");
 		exit(98);
 	}
 
-	lseek(i, 0, SEEK_SET);
-	ret_read = read(i, pt, 27);
+	lseek(fd, 0, SEEK_SET);
+	ret_read = read(fd, ptr, 27);
 
 	if (ret_read == -1)
 	{
@@ -233,14 +233,14 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	if (!check_elf(pt))
+	if (!check_elf(ptr))
 	{
 		dprintf(STDERR_FILENO, "Err: It is not an ELF\n");
 		exit(98);
 	}
 
-	check_sys(pt);
-	close(i);
+	check_sys(ptr);
+	close(fd);
 
 	return (0);
 }
