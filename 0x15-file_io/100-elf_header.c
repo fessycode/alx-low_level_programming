@@ -178,7 +178,7 @@ void check_sys(char *pt)
 	print_version(pt);
 	print_osabi(pt);
 	print_type(pt);
-	print_addr(pt);
+	print_addrr(pt);
 }
 
 /**
