@@ -1,6 +1,7 @@
 #include "main.h"
+
 /*
- * read_textfile - a function that reads a textfile and prints
+ * read_textfile - a function that reads a textfile and prints the letters
  ii* @filename: filename to read and print.
  * @letters: numbers of letters to be printed.
  *
