@@ -6,7 +6,7 @@ TO defines Island  Perimeter function.
 
 def island_perimeter(grid):
     """
-    Returns the perimeter of the island
+    returns the perimeter of the island
     decribed in grid:
     + grid is a list of list of integers:
       - 0 represents a water zone
@@ -29,7 +29,7 @@ def island_perimeter(grid):
     sides that is not `1` increase the perimeter by `1` unit.
 
     Starting with the assumption that width is going to be equal
-    accross all row in the grid.
+    accross all row in the grid
     """
 
     if not len(grid):  # if grid is empty
